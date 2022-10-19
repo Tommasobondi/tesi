@@ -6,5 +6,6 @@ footprint = geojson_to_wkt(read_geojson(r'C:\Users\geom21020\Desktop\ws.geojson'
 products = api.query(footprint,
                       date=('20211019', '20211119'),
                       platformname='Sentinel-2',
+                      processinglevel = 'Level-1C',
                       cloudcoverpercentage=(0, 60))
 api.download_all(products)
