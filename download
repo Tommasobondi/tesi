@@ -4,7 +4,7 @@ from datetime import date
 api = SentinelAPI('tommasobondi', 'francedo03!', 'https://scihub.copernicus.eu/dhus')
 footprint = geojson_to_wkt(read_geojson(r'C:\Users\geom21020\Desktop\ws.geojson'))
 products = api.query(footprint,
-                      date=('20200803', date(2020, 08, 03)),
+                      date=('20200803', date(2020, 8, 3)),
                       platformname='Sentinel-2',
                       cloudcoverpercentage=(0, 30))
 api.download_all(products)
