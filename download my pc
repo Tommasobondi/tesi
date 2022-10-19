@@ -1,0 +1,10 @@
+import sentinelsat
+from sentinelsat import SentinelAPI, read_geojson, geojson_to_wkt
+from datetime import date
+api = SentinelAPI('tommasobondi', 'francedo03!', 'https://scihub.copernicus.eu/dhus')
+footprint = geojson_to_wkt(read_geojson(r'C:\Users\tommaso\Desktop\try.geojson'))
+products = api.query(footprint,
+                       date=('20211019', '20211119'),
+                       platformname='Sentinel-2',
+                       cloudcoverpercentage=(0, 20))
+>>> api.download_all(products)
