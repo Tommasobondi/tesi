@@ -1,7 +1,7 @@
 from collections import OrderedDict
 from sentinelsat import SentinelAPI
 
-api = SentinelAPI()
+api = SentinelAPI('tommasobondi', 'francedo03!', 'https://scihub.copernicus.eu/dhus')
 tiles = ('35SMD']
 query_kwargs = (
         platformname='Sentinel-2',
