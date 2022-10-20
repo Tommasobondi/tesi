@@ -58,7 +58,8 @@ products = api.query(footprint,
 api.download_all(products, 'C:\\Users\\geom21020\\Desktop\\Sentinel')
 
 files = glob.glob('*.zip')
-for f in files:
-    zf = zipfile.ZipFile(f, mode='r')
-    zf.extractall(pwd='password'.encode('ascii'))
-    zf.close()
+for f in os.listdir('.'):
+    if f.endswith(".zip"):
+        z = zipfile.ZipFile(f, 'r')
+        z.extractall(path=os.path.dirname(f))
+        z.close()
