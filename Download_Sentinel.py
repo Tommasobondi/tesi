@@ -1,7 +1,8 @@
 import sentinelsat
 from sentinelsat import SentinelAPI, read_geojson, geojson_to_wkt
 from datetime import date
-
+import zipfile
+import glob
 
 import geojson    
 import pandas as pd
@@ -55,3 +56,9 @@ products = api.query(footprint,
 
 
 api.download_all(products, 'C:\\Users\\geom21020\\Desktop\\Sentinel')
+
+files = glob.glob('*.zip')
+for f in files:
+    zf = zipfile.ZipFile(f, mode='r')
+    zf.extractall(pwd='password'.encode('ascii'))
+    zf.close()
