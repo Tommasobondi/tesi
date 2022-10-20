@@ -82,4 +82,5 @@ for root, dirs, files in os.walk(theWD):
                     pass
                 except OSError as e:
                     if e.errno != errno.ENOENT:
-                        raise 
+                        raise
+                        
