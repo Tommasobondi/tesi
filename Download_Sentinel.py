@@ -10,7 +10,7 @@ from geojson import Polygon
 import sys
 
 
-theWD = 'C:\'Users\geom21020\Desktop\Sentinel\'
+theWD = '\C:\'Users\geom21020\Desktop\Sentinel\'
 
 Xman = 26.55345
 Ymax = 39.14115
