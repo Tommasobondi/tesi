@@ -9,6 +9,6 @@ products = api.query(footprint,
                        date=('20211019', '20211119'), #+-, don't look so mutch but the ammount is still and the pc block
                        platformname='Sentinel-2',
                        cloudcoverpercentage=(0, 20)) #ortheconvenient one, but it depends if the percentege is of the file or the area
-                       #prodouctlevel='Level-1C' (alreadyeleborated one)
->>> api.download_all(products_name, directory_path)
+                       #producttype='Level2A' (alreadyeleborated one)
+api.download_all(products_name, directory_path)
 
