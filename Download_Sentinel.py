@@ -10,7 +10,7 @@ from geojson import Polygon
 import sys
 
 
-theWD = 'C:\\Temp\\Sentinel\\'
+theWD = 'C:\\Users\\geom21020\\Desktop\\Sentinel'
 
 Xman = 26.55345
 Ymax = 39.14115
@@ -41,17 +41,16 @@ f.close()
 
 
 
-api = SentinelAPI('tommasobondi', 'francedo03!', 'https://scihub.copernicus.eu/dhus') #mypassandusername
-footprint = geojson_to_wkt(read_geojson(theWD + '\AOI.json')) #my directory, file created with qgis, creating a polygon and extracting the shapefine in geojson
+api = SentinelAPI('tommasobondi', 'francedo03!', 'https://scihub.copernicus.eu/dhus')
+footprint = geojson_to_wkt(read_geojson(theWD + '\AOI.json'))
 
 directory_path = ''
 
 products = api.query(footprint,
-                       date=('20211010', '20211020'), #+-, don't look so mutch but the amount is still and the pc block
+                       date=('20211010', '20211020'),
                        platformname='Sentinel-2',
                        cloudcoverpercentage=(0, 20),
-                       producttype='S2MSI1C') #ortheconvenient one, but it depends if the percentege is of the file or the area
-                       #prodouctlevel='Level-1C' (alreadyeleborated one)
+                       producttype='S2MSI1C')
 
 
 
