@@ -62,10 +62,7 @@ api.download_all(products, theWD)
 
 #extract and delete the compressed
 
-
-basis_folder =  theWD
-
-for root, dirs, files in os.walk(basis_folder):
+for root, dirs, files in os.walk(theWD):
     for filename in files:
         if filename.endswith(".rar") :
             print('RAR:'+os.path.join(root,filename))
