@@ -11,7 +11,7 @@ import pyunpack
 import os
 import zipfile
 
-theWD = 'C:\\Users\\geom21020\\Desktop\\Sentinel'
+theWD = 'C:\\Users\\geom21020\\Desktop\\Sentinel'  #mywd
 
 #intrest area coordinates
 #build the geojson file
@@ -58,12 +58,12 @@ products = api.query(footprint,
 
 
 
-api.download_all(products, 'C:\\Users\\geom21020\\Desktop\\Sentinel')
+api.download_all(products, theWD)
 
 #extract and delete the compressed
 
-import os, zipfile, pyunpack
-basis_folder =  r'C:\\Users\\geom21020\\Desktop\\Sentinel'
+
+basis_folder =  r(theWD)
 
 for root, dirs, files in os.walk(basis_folder):
     for filename in files:
