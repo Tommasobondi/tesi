@@ -1,15 +1,13 @@
 import sentinelsat
 from sentinelsat import SentinelAPI, read_geojson, geojson_to_wkt
 from datetime import date
-import zipfile
-import glob
 
 import geojson    
 import pandas as pd
 #from area import area
 from geojson import Polygon
 import sys
-
+import pyunpack
 
 theWD = 'C:\\Users\\geom21020\\Desktop\\Sentinel'
 
@@ -56,10 +54,4 @@ products = api.query(footprint,
 
 
 api.download_all(products, 'C:\\Users\\geom21020\\Desktop\\Sentinel')
-
-files = glob.glob('*.zip')
-for f in f.theWD('.'):
-    if f.endswith(".zip"):
-        z = zipfile.ZipFile(f, 'r')
-        z.extractall(path=os.path.dirname(f))
-        z.close()
+pyunpack.Archive(archive_file).extractall(extract_dir)
