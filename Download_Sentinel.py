@@ -58,7 +58,7 @@ products = api.query(footprint,
 api.download_all(products, 'C:\\Users\\geom21020\\Desktop\\Sentinel')
 
 files = glob.glob('*.zip')
-for f in os.listdir('.'):
+for f in theWD('.'):
     if f.endswith(".zip"):
         z = zipfile.ZipFile(f, 'r')
         z.extractall(path=os.path.dirname(f))
