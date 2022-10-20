@@ -54,4 +54,4 @@ products = api.query(footprint,
 
 
 
-api.download_all(products, directory_path)
+api.download_all(products, 'C:\\Users\\geom21020\\Desktop\\Sentinel')
