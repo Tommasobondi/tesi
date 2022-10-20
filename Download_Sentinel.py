@@ -51,7 +51,7 @@ footprint = geojson_to_wkt(read_geojson(theWD + '\AOI.json'))
 directory_path = ''
 
 products = api.query(footprint,
-                       date=('2021020', '20211020'),  #date
+                       date=('20211020', '20211020'),  #date
                        platformname='Sentinel-2',      #platform
                        cloudcoverpercentage=(0, 20),    #first cloud mask
                        producttype='S2MSI1C')        #prodoucttype
