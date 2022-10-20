@@ -10,7 +10,8 @@ query_kwargs = (
 products = OrderedDict()
 for tile in tiles:
     kw = query_kwargs.copy()
-    kw['tileid'] = tile  # products after 2017-03-31
+    print(o)
+    kw['tileid'] = tile
     pp = api.query(**kw)
     products.update(pp)
 
