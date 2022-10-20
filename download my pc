@@ -9,8 +9,7 @@ query_kwargs = (
         date:=('20211030', '20211119'))
 products = OrderedDict()
 for tile in tiles:
-    kw = query_kwargs.copy()
-    print(o)
+    kw = query_kwargs
     kw['tileid'] = tile
     pp = api.query(**kw)
     products.update(pp)
