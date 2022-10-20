@@ -77,8 +77,7 @@ for root, dirs, files in os.walk(basis_folder):
                 print("ERROR: BAD ARCHIVE "+os.path.join(root,filename))
                 print(e)
                 try:
-                    # os.path.join(root,filename)os.remove(filename)
                     pass
-                except OSError as e: # this would be "except OSError, e:" before Python 2.6
-                    if e.errno != errno.ENOENT: # errno.ENOENT = no such file or directory
-                        raise # re-raise exception if a different error occured   
+                except OSError as e:
+                    if e.errno != errno.ENOENT:
+                        raise 
