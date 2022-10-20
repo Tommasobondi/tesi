@@ -8,6 +8,8 @@ import pandas as pd
 from geojson import Polygon
 import sys
 import pyunpack
+import os
+import zipfile
 
 theWD = 'C:\\Users\\geom21020\\Desktop\\Sentinel'
 
@@ -54,4 +56,29 @@ products = api.query(footprint,
 
 
 api.download_all(products, 'C:\\Users\\geom21020\\Desktop\\Sentinel')
-pyunpack.Archive(archive_file).extractall(extract_dir)
+
+import os, zipfile, pyunpack
+basis_folder =  r'C:\\Users\\geom21020\\Desktop\\Sentinel'
+
+for root, dirs, files in os.walk(basis_folder):
+    for filename in files:
+        if filename.endswith(".rar") :
+            print('RAR:'+os.path.join(root,filename))
+        elif filename.endswith(".zip"):
+            print('ZIP:'+os.path.join(root,filename))
+        name = os.path.splitext(os.path.basename(filename))[0]
+        if filename.endswith(".rar") or filename.endswith(".zip"):
+            try:
+                arch = pyunpack.Archive(os.path.join(root,filename))
+                # os.mkdir(name)
+                arch.extractall(directory=root)
+                os.remove(os.path.join(root,filename))
+            except Exception as e:
+                print("ERROR: BAD ARCHIVE "+os.path.join(root,filename))
+                print(e)
+                try:
+                    # os.path.join(root,filename)os.remove(filename)
+                    pass
+                except OSError as e: # this would be "except OSError, e:" before Python 2.6
+                    if e.errno != errno.ENOENT: # errno.ENOENT = no such file or directory
+                        raise # re-raise exception if a different error occured   
