@@ -8,5 +8,5 @@ products = api.query(footprint,
                        platformname='Sentinel-2',
                        cloudcoverpercentage=(0, 20),
                        producttype='Level2A')
-api.download_all(products, C:\Users\tommaso\Desktop\)
+api.download_all(products, 'C:\Users\tommaso\Desktop\')
 
