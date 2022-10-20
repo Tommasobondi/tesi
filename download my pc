@@ -1,14 +1,12 @@
-#lot of time ERROR 500, online they said because the server is very crowd, in fact tonight work
 import sentinelsat
 from sentinelsat import SentinelAPI, read_geojson, geojson_to_wkt
 from datetime import date
-#import pandas (but this is for later)
-api = SentinelAPI('tommasobondi', 'francedo03!', 'https://scihub.copernicus.eu/dhus') #mypassandusername
-footprint = geojson_to_wkt(read_geojson(r'C:\Users\tommaso\Desktop\try.geojson')) #my directory, file created with qgis, creating a polygon and exctractin the shapefine in geojson
+api = SentinelAPI('tommasobondi', 'francedo03!', 'https://scihub.copernicus.eu/dhus')
+footprint = geojson_to_wkt(read_geojson(r'C:\Users\tommaso\Desktop\try.geojson'))
 products = api.query(footprint,
-                       date=('20211019', '20211119'), #+-, don't look so mutch but the ammount is still and the pc block
+                       date=('20211019', '20211119'),
                        platformname='Sentinel-2',
-                       cloudcoverpercentage=(0, 20)) #ortheconvenient one, but it depends if the percentege is of the file or the area
-                       #producttype='Level2A' (alreadyeleborated one)
-api.download_all(products_name, directory_path)
+                       cloudcoverpercentage=(0, 20),
+                       producttype='Level2A')
+api.download_all(products, C:\Users\tommaso\Desktop\)
 
