@@ -1,0 +1,12 @@
+import os
+import fiona
+import rasterio
+from rasterio.mask import mask
+from rasterio.plot import show
+import matplotlib.pyplot as plt
+
+bandPath = 'C:\\Users\\geom21020\\Desktop\\Sentinel\\S2A_MSIL1C_20211029T090111_N0301_R007_T35SMD_20211029T100837.SAFE\\GRANULE\\L1C_T35SMD_A033180_20211029T090334\\QI_DATA\\MSK_CLOUDS_B00.gml'
+#band phat have to be done in a way that automatically import evry cloud of every immagines
+bandNames = #cloudband
+aoiFile = fiona.open('../shp/AOI.shp')
+aoiGeom = [aoiFile[0]['geometry']]
