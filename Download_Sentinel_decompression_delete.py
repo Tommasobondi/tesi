@@ -11,8 +11,8 @@ import pyunpack
 import os
 import zipfile
 
-#theWD = 'C:\\Users\\geom21020\\Desktop\\Sentinel'  #mywduni
-theWD = 'C:\\Users\\tommaso\\Desktop\\tesi\\Sentinel'  #mywdpc
+theWD = 'C:\\Users\\geom21020\\Desktop\\Sentinel'  #mywduni
+#theWD = 'C:\\Users\\tommaso\\Desktop\\tesi\\Sentinel'  #mywdpc
 
 
 #intrest area coordinates
