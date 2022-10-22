@@ -11,6 +11,6 @@ bandNames = os.listdir(bandPath)
 # see if work, print band
 bandNames
 
-aoiFile = fiona.open('C:\\Users\\geom21020\\Desktop\\Sentinel\\AOI\\AOI.shp')
+aoiFile = fiona.open('C:\\Users\\geom21020\\Desktop\\Sentinel\\mygeodata\\AOI-polygon.shp')
 aoiGeom = [aoiFile[0]['geometry']]
 
