@@ -21,6 +21,7 @@ band12 = rasterio.open(PATH+A+'B12.jp2', driver='JP2OpenJPEG') # b12
 bandTRUE = rasterio.open(PATH+A+'TCI.jp2', driver='JP2OpenJPEG') # truecolor
 
 '''
+#various
 #number of raster bands
 band4.count
 #number of raster columns
@@ -41,7 +42,7 @@ band4.read(1)
 
 '''
 #multiple band representation
-fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(12, 4))
+fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(12, 4)) #remail in rate 3 to 1 in X to Y
 plot.show(band2, ax=ax1, cmap='Blues')
 plot.show(band3, ax=ax2, cmap='Greens')
 plot.show(band4, ax=ax3, cmap='Reds')
@@ -49,7 +50,7 @@ fig.tight_layout()
 '''
 
 '''
-trueColor = rasterio.open('../Output/SentinelTrueColor2.tiff','w',driver='Gtiff',
+trueColor = rasterio.open('C:\\Users\\geom21020\\Desktop\\Sentinel\\20211029_output\\Sentinelcomposite.tiff','w',driver='Gtiff',
                          width=band4.width, height=band4.height,
                          count=3,
                          crs=band4.crs,
@@ -60,8 +61,8 @@ trueColor.write(band2.read(1),3) #blue
 trueColor.write(band3.read(1),2) #green
 trueColor.write(band4.read(1),1) #red
 trueColor.close()
-src = rasterio.open(r"../Output/SentinelTrueColor2.tiff", count=3)
-plot.show(src)
+scomp = rasterio.open(r"C:\\Users\\geom21020\\Desktop\\Sentinel\\20211029_output\\Sentinelcomposite.tiff", count=3)
+plot.show(scomp)
 '''
 
 
