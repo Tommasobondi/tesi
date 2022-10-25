@@ -50,36 +50,19 @@ fig.tight_layout()
 '''
 
 '''
-trueColor = rasterio.open('C:\\Users\\geom21020\\Desktop\\Sentinel\\20211029_output\\Sentinelcomposite.tiff','w',driver='Gtiff',
+CompColor = rasterio.open('C:\\Users\\geom21020\\Desktop\\Sentinel\\20211029_output\\Sentinelcomposite.tiff','w',driver='Gtiff',
                          width=band4.width, height=band4.height,
                          count=3,
                          crs=band4.crs,
                          transform=band4.transform,
                          dtype=band4.dtypes[0]
                          )
-trueColor.write(band2.read(1),3) #blue
-trueColor.write(band3.read(1),2) #green
-trueColor.write(band4.read(1),1) #red
-trueColor.close()
+CompColor.write(band2.read(1),3) #blue
+CompColor.write(band3.read(1),2) #green
+CompColor.write(band4.read(1),1) #red
+CompColor.close()
 scomp = rasterio.open(r"C:\\Users\\geom21020\\Desktop\\Sentinel\\20211029_output\\Sentinelcomposite.tiff", count=3)
 plot.show(scomp)
-'''
-
-
-
-'''
-#export false color image
-falseColor = rasterio.open('../Output/SentinelFalseColor.tiff', 'w', driver='Gtiff',
-                          width=band2.width, height=band2.height,
-                          count=3,
-                          crs=band2.crs,
-                          transform=band2.transform,
-                          dtype='uint16'                   
-                         )
-falseColor.write(band3.read(1),3) #Blue
-falseColor.write(band4.read(1),2) #Green
-falseColor.write(band8.read(1),1) #Red
-falseColor.close()
 '''
 
 '''
