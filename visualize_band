@@ -21,7 +21,7 @@ band12 = rasterio.open(PATH+A+'B12.jp2', driver='JP2OpenJPEG') # b12
 bandTRUE = rasterio.open(PATH+A+'TCI.jp2', driver='JP2OpenJPEG') # truecolor
 
 '''
-#various
+#various command
 #number of raster bands
 band4.count
 #number of raster columns
@@ -57,15 +57,16 @@ CompColor = rasterio.open('C:\\Users\\geom21020\\Desktop\\Sentinel\\20211029_out
                          transform=band4.transform,
                          dtype=band4.dtypes[0]
                          )
-CompColor.write(band2.read(1),3) #blue
-CompColor.write(band3.read(1),2) #green
-CompColor.write(band4.read(1),1) #red
+CompColor.write(band2.read(1),3) 
+CompColor.write(band3.read(1),2)
+CompColor.write(band4.read(1),1)
 CompColor.close()
 scomp = rasterio.open(r"C:\\Users\\geom21020\\Desktop\\Sentinel\\20211029_output\\Sentinelcomposite.tiff", count=3)
 plot.show(scomp)
 '''
 
 '''
+#allgraph https://matplotlib.org/stable/plot_types/index.html
 #generate histogram
 trueColor = rasterio.open('../Output/SentinelTrueColor2.tiff')
 plot.show_hist(trueColor, bins=50, lw=0.0, stacked=False, alpha=0.3, histtype='stepfilled', title="Histogram")
