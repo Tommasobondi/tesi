@@ -2,11 +2,39 @@ import rasterio
 from rasterio import plot
 import matplotlib.pyplot as plt
 
-#forthe first downloadedexample
+#for the first download ( 20211029)
 PATH = 'C:\\Users\\geom21020\\Desktop\\Sentinel\\S2A_MSIL1C_20211029T090111_N0301_R007_T35SMD_20211029T100837.SAFE\\GRANULE\\L1C_T35SMD_A033180_20211029T090334\\IMG_DATA\\'
-a = 'T35SMD_20211029T090111_B'
-band1 = rasterio.open(PATH+A+'01.jp2', driver='JP2OpenJPEG') #b1
-band2 = rasterio.open(PATH+A+'02.jp2', driver='JP2OpenJPEG') #b2 blue
-band3 = rasterio.open(imagePath+'T11SKB_20180825T183909_B03.jp2', driver='JP2OpenJPEG') # b3 green
-band4 = rasterio.open(imagePath+'T11SKB_20180825T183909_B04.jp2', driver='JP2OpenJPEG') # b4 red
-band8 = rasterio.open(imagePath+'T11SKB_20180825T183909_B08.jp2', driver='JP2OpenJPEG') # b8 nir
+A = 'T35SMD_20211029T090111_'
+band1 = rasterio.open(PATH+A+'B01.jp2', driver='JP2OpenJPEG') #b1
+band2 = rasterio.open(PATH+A+'B02.jp2', driver='JP2OpenJPEG') #b2 blue
+band3 = rasterio.open(PATH+A+'B03.jp2', driver='JP2OpenJPEG') # b3 green
+band4 = rasterio.open(PATH+A+'B04.jp2', driver='JP2OpenJPEG') # b4 red
+band5 = rasterio.open(PATH+A+'B05.jp2', driver='JP2OpenJPEG') # b5 
+band6 = rasterio.open(PATH+A+'B06.jp2', driver='JP2OpenJPEG') # b6 
+band7 = rasterio.open(PATH+A+'B07.jp2', driver='JP2OpenJPEG') # b7 
+band8 = rasterio.open(PATH+A+'B08.jp2', driver='JP2OpenJPEG') # b8 nir
+band8A = rasterio.open(PATH+A+'B8A.jp2', driver='JP2OpenJPEG') # b8 vegetation
+band9 = rasterio.open(PATH+A+'B09.jp2', driver='JP2OpenJPEG') # b9
+band10 = rasterio.open(PATH+A+'B10.jp2', driver='JP2OpenJPEG') # b10 
+band11 = rasterio.open(PATH+A+'B11.jp2', driver='JP2OpenJPEG') # b11
+band12 = rasterio.open(PATH+A+'B12.jp2', driver='JP2OpenJPEG') # b12
+bandTRUE = rasterio.open(PATH+A+'TCI.jp2', driver='JP2OpenJPEG') # truecolor
+
+'''
+#number of raster bands
+band4.count
+#number of raster columns
+band4.width
+#number of raster rows
+band4.height
+#plot band 
+plot.show(band4)
+#type of raster byte
+band4.dtypes[0]
+#raster sytem of reference
+band4.crs
+#raster transform parameters
+band4.transform
+#raster values as matrix array
+band4.read(1)
+'''
