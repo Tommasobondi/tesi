@@ -1,0 +1,12 @@
+import rasterio
+from rasterio import plot
+import matplotlib.pyplot as plt
+
+#forthe first downloadedexample
+PATH = 'C:\\Users\\geom21020\\Desktop\\Sentinel\\S2A_MSIL1C_20211029T090111_N0301_R007_T35SMD_20211029T100837.SAFE\\GRANULE\\L1C_T35SMD_A033180_20211029T090334\\IMG_DATA\\'
+a = 'T35SMD_20211029T090111_B'
+band1 = rasterio.open(PATH+A+'01.jp2', driver='JP2OpenJPEG') #b1
+band2 = rasterio.open(PATH+A+'02.jp2', driver='JP2OpenJPEG') #b2 blue
+band3 = rasterio.open(imagePath+'T11SKB_20180825T183909_B03.jp2', driver='JP2OpenJPEG') # b3 green
+band4 = rasterio.open(imagePath+'T11SKB_20180825T183909_B04.jp2', driver='JP2OpenJPEG') # b4 red
+band8 = rasterio.open(imagePath+'T11SKB_20180825T183909_B08.jp2', driver='JP2OpenJPEG') # b8 nir
