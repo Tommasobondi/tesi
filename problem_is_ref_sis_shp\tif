@@ -1,0 +1,157 @@
+import sentinelsat
+from sentinelsat import SentinelAPI, read_geojson, geojson_to_wkt
+from datetime import date
+
+import geojson    
+import pandas as pd
+#from area import area
+from geojson import Polygon
+import sys
+import pyunpack
+import os
+import zipfile
+from pathlib import Path
+from osgeo import gdal
+from osgeo import ogr
+
+
+
+
+
+theWD = 'C:\\Users\\geom21020\\Desktop\\Sentinel'  #mywduni
+#theWD = 'C:\\Temp\\Sentinel'  #kont
+#theWD = 'C:\\Users\\tommaso\\Desktop\\tesi\\Sentinel'  #mywdpc
+
+
+#intrest area coordinates
+#build the geojson file
+
+##VectorDriver = ogr.GetDriverByName('ESRI Shapefile') #intialize vector
+##VectorDataset = VectorDriver.Open("boxes.shp", 1) 
+##layer = VectorDataset.GetLayer()
+##feature=layer[0] #select the first polygon (the circle shown in image)
+##geom = feature.GetGeometryRef() 
+##minX, maxX, minY, maxY = geom.GetEnvelope()
+
+
+Xmax = 462000
+Ymax = 4333000
+
+
+Xmin = 459500
+Ymin = 4330500
+
+
+
+d = {'X': [26.53545, 26.55345, 26.55345, 26.53545], 'Y': [39.12395, 39.12395, 39.14115, 39.14115]} 
+df = pd.DataFrame(data=d)
+
+long_coords = df['X'].tolist()
+lat_coords = df['Y'].tolist()
+
+data = []
+for i in range(0, len(long_coords)):
+    data.append( tuple([long_coords[i],lat_coords[i]]) )
+
+data.append(data[0])
+
+print("Total GPS Coordinates: {}".format(len(data)))
+
+obj = Polygon([data])  
+    
+f = open(theWD + "\AOI.json", "w")
+f.write(str(obj))
+f.close()
+
+#download immagines
+
+
+api = SentinelAPI('tommasobondi', 'francedo03!', 'https://scihub.copernicus.eu/dhus')  #mydata to accede
+footprint = geojson_to_wkt(read_geojson(theWD + '\AOI.json'))
+
+directory_path = ''
+
+products = api.query(footprint,
+                       date=('20211020', '20211101'),  #date----this date download 2
+                       platformname='Sentinel-2',      #platform
+                       cloudcoverpercentage=(0, 20),    #first cloud mask
+                       producttype='S2MSI1C')        #prodoucttype
+
+
+
+api.download_all(products, theWD + "\\Download")
+
+#extract, crate folder with good dir and only useful part of prod, delete
+
+for root, dirs, files in os.walk(theWD + "\\Download"):
+    for ZIPfilename in files:
+        if ZIPfilename.endswith(".rar") :
+            print('RAR:'+os.path.join(root,ZIPfilename))
+        elif ZIPfilename.endswith(".zip"):
+            print('ZIP:'+os.path.join(root,ZIPfilename))
+        name = os.path.splitext(os.path.basename(ZIPfilename))[0]
+        if ZIPfilename.endswith(".rar") or ZIPfilename.endswith(".zip"):
+
+            arch = pyunpack.Archive(os.path.join(root,ZIPfilename))
+            arch.extractall(directory=root)
+
+
+            theExtractedImagesPath = ZIPfilename.replace(".zip", ".SAFE") + "\\GRANULE\\"
+            theImageName = os.listdir(theWD + "\\Download\\" + theExtractedImagesPath)[0]
+            theExtractedQIPath = theExtractedImagesPath + theImageName + "\\QI_DATA\\"
+            theExtractedImagesPath = theExtractedImagesPath + theImageName + "\\IMG_DATA\\"
+            
+            
+            #theExtractedImagesPath = theWD + "\\" + theExtractedQIPath
+            theDate = theExtractedImagesPath[11:19]
+
+            theImagesFolder = theWD + "\\Images"
+            if os.path.isdir(theImagesFolder) == False: os.mkdir(theImagesFolder)
+            
+            theOutputFolder = theWD + "\\Images\\" + str(theDate[-2:]) + str(theDate[5:7]) + str(theDate[:-4])
+            if os.path.isdir(theOutputFolder) == False: os.mkdir(theOutputFolder)
+
+        
+
+
+
+
+            
+            for Imagefilename in os.listdir(theWD + "\\Download\\" + theExtractedImagesPath):
+                if Imagefilename.endswith(".jp2") : 
+                    print(Imagefilename)
+                    #Clip Raster Image and Savce iside Sentinel/Images/Date
+                    raster = gdal.Open(theWD + "\\Download\\" + theExtractedImagesPath + "\\" + Imagefilename, gdal.GA_ReadOnly) #read raster
+
+                    projection=raster.GetProjectionRef()
+                    geot = raster.GetGeoTransform()
+                    ulx, xres, xskew, uly, yskew, yres  = raster.GetGeoTransform()
+
+                    driver_cloud = ogr.GetDriverByName('GML')
+                    cloud_ds = driver_cloud.Open(theWD + "\\Download\\" + theExtractedQIPath + 'MSK_CLOUDS_B00.gml')
+                    lyr = cloud_ds.GetLayer()
+                    drv = ogr.GetDriverByName( 'ESRI Shapefile' )
+                    outds = drv.CreateDataSource(theOutputFolder + "\\Cloud_" + str(Imagefilename[18:20] + ".shp"))
+                    outlyr = outds.CopyLayer(lyr, "Cloud_" + str(Imagefilename[18:20] + ".shp"))
+
+
+                    
+
+                    drv_tiff = gdal.GetDriverByName("GTiff") 
+                    cloud_img = drv_tiff.Create(theOutputFolder + "\\Cloud_" + str(Imagefilename[18:20] + ".tif"), raster.RasterXSize, raster.RasterYSize, 1, gdal.GDT_Float32)
+                    cloud_img.SetGeoTransform(geot)
+                    gdal.RasterizeLayer(cloud_img, [1], lyr)
+                    cloud_img.GetRasterBand(1).SetNoDataValue(0)
+                    cloud_img = None
+                    
+
+
+
+
+                    
+                    OutTile = gdal.Warp(theOutputFolder + "\\Band_" + str(Imagefilename[18:20] + ".tif"), raster, format='GTiff', outputBounds=[Xmin, Ymin, Xmax, Ymax],xRes=xres,yRes=xres,dstSRS=projection)
+
+         
+            os.remove(os.path.join(root,ZIPfilename))
+
+            sys.exit()
