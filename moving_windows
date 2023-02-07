@@ -1,0 +1,57 @@
+import numpy as np
+import rasterio
+
+def moving_window(image, window_size, function):
+    """
+    Applies the given function to a moving window on the input image.
+    The function should take an array of shape (window_size, window_size) as input.
+
+    Parameters:
+        image (np.ndarray): The input image.
+        window_size (int): The size of the moving window in pixels.
+        function (callable): The function to apply to each window.
+
+    Returns:
+        np.ndarray: The output image with the same shape as the input image.
+    """
+    # Determine the number of rows and columns in the image
+    rows, cols = image.shape
+
+    # Create an output image with the same shape as the input image
+    output_image = np.zeros_like(image)
+
+    # Define the moving window shape
+    window_shape = (window_size, window_size)
+
+    # Iterate over the rows and columns of the image
+    for i in range(0, rows - window_size + 1):
+        for j in range(0, cols - window_size + 1):
+            window = image[i:i + window_size, j:j + window_size]
+            output_image[i:i + window_size, j:j + window_size] = function(window)
+
+    return output_image
+
+def import_sentinel_image(file_path):
+    """
+    Imports a Sentinel image from a file.
+
+    Parameters:
+        file_path (str): The file path of the Sentinel image.
+
+    Returns:
+        np.ndarray: The imported Sentinel image.
+    """
+    with rasterio.open(file_path) as src:
+        sentinel_image = src.read(1)
+
+    return sentinel_image
+
+# Load the Sentinel image
+sentinel_image = import_sentinel_image("path/to/sentinel_image.tif")
+
+# Define the window size and the function to apply to each window
+window_size = 3
+function = lambda x: np.mean(x)
+
+# Apply the moving window to the Sentinel image
+output_image = moving_window(sentinel_image, window_size, function)
